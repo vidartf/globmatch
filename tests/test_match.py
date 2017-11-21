@@ -9,9 +9,9 @@ import os
 
 import pytest
 
-from fnglob import glob_match
-from fnglob.pathutils import SEPARATORS
-from fnglob.translation import compile_pattern
+from globmatch import glob_match
+from globmatch.pathutils import SEPARATORS
+from globmatch.translation import compile_pattern
 
 
 def test_glob_match_subentries():

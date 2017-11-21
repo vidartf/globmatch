@@ -9,7 +9,7 @@ import sys
 
 import pytest
 
-from fnglob.pathutils import iexplode_path, explode_path, SEPARATORS
+from globmatch.pathutils import iexplode_path, explode_path, SEPARATORS
 
 
 @pytest.fixture(params=SEPARATORS)

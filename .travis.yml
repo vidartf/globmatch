@@ -14,6 +14,6 @@ before_install:
 install:
   - pip install --upgrade -e ".[test]"
 script:
-  - py.test -l --cov-report xml:$TRAVIS_BUILD_DIR/coverage.xml --cov=fnglob
+  - py.test -l --cov-report xml:$TRAVIS_BUILD_DIR/coverage.xml --cov=globmatch
 after_success:
   - codecov
