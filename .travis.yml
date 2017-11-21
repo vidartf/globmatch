@@ -1,0 +1,20 @@
+language: python
+python:
+  - 3.6
+  - 3.5
+  - 3.4
+  - 3.3
+  - 2.7
+sudo: false
+cache:
+  pip: true
+before_install:
+  - pip install -U pip setuptools
+  - nvm install 6
+  - pip install codecov
+install:
+  - pip install --upgrade ".[test]" -v
+script:
+  - py.test -l --cov-report xml:$TRAVIS_BUILD_DIR/coverage.xml --cov=fnglob
+after_success:
+  - codecov
