@@ -3,7 +3,7 @@
 **[Testing](#testing)** |
 **[License](#license)**
 
-# [globmatch](https://github.com/vidartf/globmatch) Matching paths against globs
+# [globmatch](https://github.com/vidartf/globmatch) - Matching paths against globs
 
 [![Build Status](https://travis-ci.org/vidartf/globmatch.svg?branch=master)](https://travis-ci.org/vidartf/globmatch)
 [![codecov.io](https://codecov.io/github/vidartf/globmatch/coverage.svg?branch=master)](https://codecov.io/github/vidartf/globmatch?branch=master)
