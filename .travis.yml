@@ -10,10 +10,9 @@ cache:
   pip: true
 before_install:
   - pip install -U pip setuptools
-  - nvm install 6
   - pip install codecov
 install:
-  - pip install --upgrade ".[test]" -v
+  - pip install --upgrade -e ".[test]"
 script:
   - py.test -l --cov-report xml:$TRAVIS_BUILD_DIR/coverage.xml --cov=fnglob
 after_success:
