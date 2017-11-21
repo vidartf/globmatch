@@ -9,10 +9,7 @@ import sys
 
 import pytest
 
-from fnglob.pathutils import iexplode_path, explode_path
-
-
-SEPARATORS = (os.sep,) if os.sep == os.altsep else (os.sep, os.altsep)
+from fnglob.pathutils import iexplode_path, explode_path, SEPARATORS
 
 
 @pytest.fixture(params=SEPARATORS)

@@ -13,7 +13,7 @@ import re
 from .pathutils import iexplode_path
 
 
-SEPARATORS = os.sep if os.sep == os.altsep else os.sep + os.altsep
+SEPARATORS = os.sep if os.altsep is None else os.sep + os.altsep
 
 
 @lru_cache(maxsize=256, typed=True)

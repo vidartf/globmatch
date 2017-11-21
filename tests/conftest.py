@@ -11,11 +11,11 @@ import pytest
 
 @pytest.fixture()
 def needs_altsep():
-    if os.sep == os.altsep:
+    if os.altsep is None:
         pytest.skip('test needs alternative path separator')
 
 
 @pytest.fixture()
 def needs_no_altsep():
-    if os.sep != os.altsep:
+    if os.altsep is not None:
         pytest.skip('test needs alternative path separator')
