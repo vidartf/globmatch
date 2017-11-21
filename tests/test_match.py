@@ -34,6 +34,13 @@ def test_glob_match_sep_in_charpattern(needs_no_altsep):
     assert m(b'dir/mypat\\ern/file')
 
 
+def test_glob_match_root():
+    m = compile_pattern('**/.git')
+    assert m('/.git/gitconfig')
+    m = compile_pattern('.git')
+    assert not m('/.git/gitconfig')
+
+
 _glob_patterns = (
     '.config',
     '**/coverage',
