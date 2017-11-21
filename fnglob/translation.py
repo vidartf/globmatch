@@ -34,10 +34,35 @@ def translate_glob(pat):
     for part in iexplode_path(pat):
         translated_parts.append(translate_glob_part(part))
     os_sep_class = '[%s]' % re.escape(SEPARATORS)
-    res = os_sep_class.join(translated_parts)
+    res = join_translated(translated_parts, os_sep_class)
     res = '{res}({os_sep_class}?.*)?\\Z(?ms)'.format(res=res, os_sep_class=os_sep_class)
     # in the future (py 3.6+):
     # res = f'{res}({os_sep_class}?.*)?\\Z(?ms)'
+    return res
+
+
+def join_translated(translated_parts, os_sep_class):
+    """Join translated glob pattern parts.
+
+    This is different from a simple join, as care need to be taken
+    to allow ** to match ZERO or more directories.
+    """
+    if len(translated_parts) < 2:
+        return translated_parts[0]
+
+    res = ''
+    for part in translated_parts[:-1]:
+        if part == '.*':
+            # drop separator, since it is optional
+            # (** matches ZERO or more dirs)
+            res += part
+        else:
+            res += part + os_sep_class
+    if translated_parts[-1] == '.*':
+        # Final part is **, undefined behavior since we don't check against filesystem
+        res += translated_parts[-1]
+    else:
+        res += translated_parts[-1]
     return res
 
 
