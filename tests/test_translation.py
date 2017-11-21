@@ -4,8 +4,8 @@
 # Copyright (c) Simula Research Laboratory.
 # Distributed under the terms of the Modified BSD License.
 
-from fnglob.translation import (
-    translate_glob, translate_glob_part, SEPARATORS)
+from fnglob.pathutils import SEPARATORS
+from fnglob.translation import translate_glob, translate_glob_part
 
 NON_SEP_CHAR = '[^%s]' % SEPARATORS
 

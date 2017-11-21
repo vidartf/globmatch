@@ -8,6 +8,8 @@
 
 import os
 
+SEPARATORS = os.sep if os.altsep is None else os.sep + os.altsep
+
 
 # FIXME: For our purposes, these should avoid splitting in the middle of [] parts
 

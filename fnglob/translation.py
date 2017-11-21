@@ -10,10 +10,7 @@ from functools import lru_cache
 import os
 import re
 
-from .pathutils import iexplode_path
-
-
-SEPARATORS = os.sep if os.altsep is None else os.sep + os.altsep
+from .pathutils import iexplode_path, SEPARATORS
 
 
 @lru_cache(maxsize=256, typed=True)

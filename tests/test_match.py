@@ -10,7 +10,8 @@ import os
 import pytest
 
 from fnglob import glob_match
-from fnglob.translation import compile_pattern, SEPARATORS
+from fnglob.pathutils import SEPARATORS
+from fnglob.translation import compile_pattern
 
 
 def test_glob_match_subentries():
