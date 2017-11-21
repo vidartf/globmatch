@@ -6,9 +6,12 @@
 
 """Utilities for matching a path against globs."""
 
-from functools import lru_cache
 import os
 import re
+try:
+    from functools import lru_cache
+except ImportError:
+    from backports.functools_lru_cache import lru_cache
 
 from .pathutils import iexplode_path, SEPARATORS
 
