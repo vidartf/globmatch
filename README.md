@@ -7,7 +7,6 @@
 
 [![Build Status](https://travis-ci.org/vidartf/globmatch.svg?branch=master)](https://travis-ci.org/vidartf/globmatch)
 [![codecov.io](https://codecov.io/github/vidartf/globmatch/coverage.svg?branch=master)](https://codecov.io/github/vidartf/globmatch?branch=master)
-[![Documentation Status](https://readthedocs.org/projects/globmatch/badge/?version=latest)](http://globmatch.readthedocs.io/en/latest/?badge=latest)
 
 `globmatch` provides functions for matching a patch against one ore more glob patterns. This differs from the `glob`
 module of the standard library, which matches a glob against the file-tree on your system. `globmatch` does not
