@@ -25,7 +25,7 @@ def iexplode_path(path):
         if tail or not head:
             yield tail
         return
-    for p in explode_path(head):
+    for p in iexplode_path(head):
         yield p
     yield tail
 
