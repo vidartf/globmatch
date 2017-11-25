@@ -35,7 +35,7 @@ def translate_glob(pat):
         translated_parts.append(translate_glob_part(part))
     os_sep_class = '[%s]' % re.escape(SEPARATORS)
     res = join_translated(translated_parts, os_sep_class)
-    res = '{res}({os_sep_class}?.*)?\\Z(?ms)'.format(res=res, os_sep_class=os_sep_class)
+    res = '{res}\\Z(?ms)'.format(res=res)
     # in the future (py 3.6+):
     # res = f'{res}({os_sep_class}?.*)?\\Z(?ms)'
     return res
@@ -47,9 +47,6 @@ def join_translated(translated_parts, os_sep_class):
     This is different from a simple join, as care need to be taken
     to allow ** to match ZERO or more directories.
     """
-    if len(translated_parts) < 2:
-        return translated_parts[0]
-
     res = ''
     for part in translated_parts[:-1]:
         if part == '.*':
@@ -58,11 +55,17 @@ def join_translated(translated_parts, os_sep_class):
             res += part
         else:
             res += part + os_sep_class
+
     if translated_parts[-1] == '.*':
         # Final part is **, undefined behavior since we don't check against filesystem
         res += translated_parts[-1]
+    elif translated_parts[-1] == '[^%s]*' % SEPARATORS:
+        # Final part is *
+        res += translated_parts[-1]
     else:
         res += translated_parts[-1]
+        # Also allow recursion if last part is a directory:
+        res += '({os_sep_class}?.*)?'.format(os_sep_class=os_sep_class)
     return res
 
 

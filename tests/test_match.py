@@ -45,6 +45,11 @@ def test_glob_match_root():
     m = compile_pattern('.git')
     assert not m('/.git/gitconfig')
 
+def test_glob_match_single_star_no_recurse():
+    compile_pattern.cache_clear()
+    m = compile_pattern('dir/*')
+    assert m('dir/subentry')
+    assert not m('dir/subentry/subsub')
 
 _glob_patterns = (
     '.config',
