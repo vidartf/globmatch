@@ -15,26 +15,31 @@ from globmatch.translation import compile_pattern
 
 
 def test_glob_match_subentries():
+    compile_pattern.cache_clear()
     m = compile_pattern('.git')
     assert m('.git/subdir/entry')
 
 
 def test_glob_match_bytestring():
+    compile_pattern.cache_clear()
     m = compile_pattern(b'.git')
     assert m(b'.git/subdir/entry')
 
 def test_glob_match_incomplete_charpat():
+    compile_pattern.cache_clear()
     m = compile_pattern('**/subdir[fe/*.ext')
     assert m('mydir/subdir[fe/myfile.ext')
 
 
 def test_glob_match_sep_in_charpattern(needs_no_altsep):
+    compile_pattern.cache_clear()
     # If \ is not a path sep, it should be valid in char pattern:
     m = compile_pattern(b'dir/mypa[ts][t\\]ern/file')
     assert m(b'dir/mypat\\ern/file')
 
 
 def test_glob_match_root():
+    compile_pattern.cache_clear()
     m = compile_pattern('**/.git')
     assert m('/.git/gitconfig')
     m = compile_pattern('.git')
