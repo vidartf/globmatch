@@ -16,32 +16,41 @@ except ImportError:
 from .pathutils import iexplode_path, SEPARATORS
 
 
+# TODO: In the future use f-strings for formatting
+
+
 @lru_cache(maxsize=256, typed=True)
-def compile_pattern(pat):
-    """Translate and compile a glob pattern to a regular expression matcher."""
+def compile_pattern(pat, subentries_match=None):
+    """Translate and compile a glob pattern to a regular expression matcher.
+
+    Parameters:
+        pat: string
+            The pattern to compile
+        subentries_match: boolean
+            When true, acts as if
+
+    """
     if isinstance(pat, bytes):
         pat_str = pat.decode('ISO-8859-1')
-        res_str = translate_glob(os.path.normcase(pat_str))
+        res_str = translate_glob(os.path.normcase(pat_str), subentries_match=subentries_match)
         res = res_str.encode('ISO-8859-1')
     else:
-        res = translate_glob(os.path.normcase(pat))
+        res = translate_glob(os.path.normcase(pat), subentries_match=subentries_match)
     return re.compile(res).match
 
 
-def translate_glob(pat):
+def translate_glob(pat, subentries_match=None):
     """Translate a glob PATTERN to a regular expression."""
     translated_parts = []
     for part in iexplode_path(pat):
         translated_parts.append(translate_glob_part(part))
     os_sep_class = '[%s]' % re.escape(SEPARATORS)
-    res = join_translated(translated_parts, os_sep_class)
+    res = join_translated(translated_parts, os_sep_class, subentries_match=subentries_match)
     res = '{res}\\Z(?ms)'.format(res=res)
-    # in the future (py 3.6+):
-    # res = f'{res}({os_sep_class}?.*)?\\Z(?ms)'
     return res
 
 
-def join_translated(translated_parts, os_sep_class):
+def join_translated(translated_parts, os_sep_class, subentries_match):
     """Join translated glob pattern parts.
 
     This is different from a simple join, as care need to be taken
@@ -57,15 +66,22 @@ def join_translated(translated_parts, os_sep_class):
             res += part + os_sep_class
 
     if translated_parts[-1] == '.*':
-        # Final part is **, undefined behavior since we don't check against filesystem
+        # Final part is **
+        # Should not match directory:
+        res += '.+'
+        # Follow stdlib/git convention of matching all sub files/directories:
+        res += '({os_sep_class}?.*)?'.format(os_sep_class=os_sep_class)
+    elif subentries_match:
+        # Should match directory, but might also match sub entries:
         res += translated_parts[-1]
-    elif translated_parts[-1] == '[^%s]*' % SEPARATORS:
-        # Final part is *
-        res += translated_parts[-1]
+        res += '({os_sep_class}?.*)?'.format(os_sep_class=os_sep_class)
     else:
         res += translated_parts[-1]
-        # Also allow recursion if last part is a directory:
-        res += '({os_sep_class}?.*)?'.format(os_sep_class=os_sep_class)
+        # Allow trailing slashes
+        # Note: This indicates that the last part whould be a directory, but
+        # we explictly say that we don't consult the filesystem, so there is
+        # no way for us to know.
+        res += '{os_sep_class}?'.format(os_sep_class=os_sep_class)
     return res
 
 
