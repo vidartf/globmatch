@@ -65,9 +65,6 @@ to view test coverage in the source browser on github.
 
 ## License
 
-We use a shared copyright model that enables all contributors to maintain the
-copyright on their contributions.
-
 All code is licensed under the terms of the revised BSD license.
 
 ## Resources
