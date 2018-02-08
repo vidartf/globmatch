@@ -8,7 +8,7 @@
 [![Build Status](https://travis-ci.org/vidartf/globmatch.svg?branch=master)](https://travis-ci.org/vidartf/globmatch)
 [![codecov.io](https://codecov.io/github/vidartf/globmatch/coverage.svg?branch=master)](https://codecov.io/github/vidartf/globmatch?branch=master)
 
-`globmatch` provides functions for matching a patch against one ore more glob patterns in Python.
+`globmatch` provides functions for matching a path against one ore more glob patterns in Python.
 This differs from the `glob` module of the standard library, which matches a glob against the
 file-tree on your system. `globmatch` does not interact with the filesystem at all, but relies on
 generic matching. It also differs from the `fnmatch` module of the standard library in that it
