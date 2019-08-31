@@ -3,6 +3,8 @@
 
 # Copyright (c) Simula Research Laboratory.
 # Distributed under the terms of the Modified BSD License.
+#
+# Copyright © 2001-2019 Python Software Foundation; All Rights Reserved
 
 """Utilities for matching a path against globs."""
 
