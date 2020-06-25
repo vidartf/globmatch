@@ -99,3 +99,12 @@ def test_multi_glob_match_several():
     assert glob_match('.config/coverage/foo', _glob_patterns)
     # Matches .config :
     assert glob_match('.config/coverage/foo', _glob_patterns, subentries_match=True)
+
+
+def test_match_dot_files():
+    compile_pattern.cache_clear()
+    assert glob_match('foo/.dotfile', ["**/.*"])
+    assert glob_match('.dotfile', ["**/.*"])
+    assert glob_match('.dotfile', ["**/.dotfile"])
+    assert not glob_match('foo/file.py', [r"**/.*"])
+
