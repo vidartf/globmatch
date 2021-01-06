@@ -48,7 +48,7 @@ def translate_glob(pat, subentries_match=None):
         translated_parts.append(translate_glob_part(part))
     os_sep_class = '[%s]' % re.escape(SEPARATORS)
     res = join_translated(translated_parts, os_sep_class, subentries_match=subentries_match)
-    res = '{res}\\Z(?ms)'.format(res=res)
+    res = r'(?s:{res})\Z'.format(res=res)
     return res
 
 
