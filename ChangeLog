@@ -1,7 +1,50 @@
 CHANGES
 =======
 
+2.0.0
+-----
+
+* 2.0.0
+* Some metadata updates
+* Fix \*\* pattern for Windows
+* Fix matching dotfiles
+* Update README.md
+* Update test.yml
+* various cleanup
+* Change CI to GH
+* Update pytest minimum version
+* Also run CI on 3.8
+* Fix inline regexp flags not at beggining
+* Update .travis.yml
+* Make it clear that this is derived from CPyhton source
+* Include LICENSE.md file in wheels
+* Clean up licensing info
+* Typo in README
+* Bump major dev version as changes are breaking
+* Put subentry matching behind flag
+* Fix iteration
+* Fix case of final single star pattern
+* Clear LRU cache for tests
+* Add manifix config
+* Back to dev
+
 1.0.0
 -----
 
-* Initial release
+* Release 1.0.0
+* Specify that it is for Python
+* Adjust README
+* Cleanup README
+* Add readme
+* Add appveyor CI
+* Rename to globmatch
+* Do develop CI install for easier coverage reporting
+* Fix lru\_cache for py2.7
+* Fix imports
+* Fix use of altsep for posix
+* Set license
+* Add travis CI
+* Add tests
+* Adjust translated pattern join
+* Initial implementation
+* :space\_invader: Added .gitattributes & .gitignore files
