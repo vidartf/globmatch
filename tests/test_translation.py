@@ -5,13 +5,13 @@
 # Distributed under the terms of the Modified BSD License.
 
 from globmatch.pathutils import SEPARATORS
-from globmatch.translation import translate_glob, translate_glob_part
+from globmatch.translation import translate_glob, translate_glob_part, double_start_re
 
 NON_SEP_CHAR = '[^%s]' % SEPARATORS
 
 
 def test_part_doublestar():
-    assert translate_glob_part('**') == '.*'
+    assert translate_glob_part('**') == double_start_re
 
 
 def test_part_star():

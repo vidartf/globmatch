@@ -20,6 +20,9 @@ from .pathutils import iexplode_path, SEPARATORS
 
 # TODO: In the future use f-strings for formatting
 
+os_sep_class = '[%s]' % re.escape(SEPARATORS)
+double_start_re = r'.*((?<=(%s))|(?<=(\A)))' % (os_sep_class,)
+
 
 @lru_cache(maxsize=256, typed=True)
 def compile_pattern(pat, subentries_match=None):
@@ -40,13 +43,11 @@ def compile_pattern(pat, subentries_match=None):
         res = translate_glob(os.path.normcase(pat), subentries_match=subentries_match)
     return re.compile(res).match
 
-
 def translate_glob(pat, subentries_match=None):
     """Translate a glob PATTERN to a regular expression."""
     translated_parts = []
     for part in iexplode_path(pat):
         translated_parts.append(translate_glob_part(part))
-    os_sep_class = '[%s]' % re.escape(SEPARATORS)
     res = join_translated(translated_parts, os_sep_class, subentries_match=subentries_match)
     res = r'(?s:{res})\Z'.format(res=res)
     return res
@@ -60,14 +61,14 @@ def join_translated(translated_parts, os_sep_class, subentries_match):
     """
     res = ''
     for part in translated_parts[:-1]:
-        if part == '.*':
+        if part == double_start_re:
             # drop separator, since it is optional
             # (** matches ZERO or more dirs)
             res += part
         else:
             res += part + os_sep_class
 
-    if translated_parts[-1] == '.*':
+    if translated_parts[-1] == double_start_re:
         # Final part is **
         # Should not match directory:
         res += '.+'
@@ -91,7 +92,7 @@ def translate_glob_part(pat):
     """Translate a glob PATTERN PART to a regular expression."""
     # Code modified from Python 3 standard lib fnmatch:
     if pat == '**':
-        return '.*'
+        return double_start_re
     i, n = 0, len(pat)
     res = []
     while i < n:
