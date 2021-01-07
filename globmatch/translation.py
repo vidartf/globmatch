@@ -20,7 +20,8 @@ from .pathutils import iexplode_path, SEPARATORS
 
 # TODO: In the future use f-strings for formatting
 
-double_start_re = r'.*((?<=(/))|(?<=(\A)))'
+os_sep_class = '[%s]' % re.escape(SEPARATORS)
+double_start_re = r'.*((?<=(%s))|(?<=(\A)))' % (os_sep_class,)
 
 
 @lru_cache(maxsize=256, typed=True)
@@ -47,7 +48,6 @@ def translate_glob(pat, subentries_match=None):
     translated_parts = []
     for part in iexplode_path(pat):
         translated_parts.append(translate_glob_part(part))
-    os_sep_class = '[%s]' % re.escape(SEPARATORS)
     res = join_translated(translated_parts, os_sep_class, subentries_match=subentries_match)
     res = r'(?s:{res})\Z'.format(res=res)
     return res
